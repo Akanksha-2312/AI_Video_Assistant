@@ -203,13 +203,13 @@ http://127.0.0.1:8501
 
 ## Home Page
 
-![Home Page](Home.jpg)
+![Home Page](Home.jpeg)
 
 ---
 
 ## AI Chat Interface
 
-![Chat Interface](Chat_Interface.jpg)
+![Chat Interface](Chat_Interface.jpeg)
 
 ---
 
