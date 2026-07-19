@@ -1,6 +1,6 @@
 import os 
 from langchain_chroma import Chroma 
-from langchain_community.embeddings import HuggingFaceEmbeddings
+from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_core.documents import Document
 
@@ -12,7 +12,7 @@ EMBEDDING_MODEL  = "all-MiniLM-L6-v2"
 def get_embeddings():
     return HuggingFaceEmbeddings(
         model_name=EMBEDDING_MODEL,
-        model_kwargs={"device": "gpu"})
+        model_kwargs={"device": "cuda"})
 
 def get_vector_store(transcript: str) -> Chroma:
     print("Initializing vector store...")
@@ -33,7 +33,7 @@ def get_vector_store(transcript: str) -> Chroma:
 
     vector_store = Chroma.from_documents(
         documents = docs,
-        embeddings = embeddings,
+        embedding = embeddings,
         collection_name = COLLECTION_NAME,
         persist_directory = CHROMA_DIR
     )
@@ -41,7 +41,7 @@ def get_vector_store(transcript: str) -> Chroma:
     return vector_store
 
 def load_vector_store() -> Chroma:
-    embeddings = get_embeddings(), 
+    embeddings = get_embeddings()
     vector_store = Chroma(
         collection_name = COLLECTION_NAME,
         persist_directory = CHROMA_DIR,
@@ -56,6 +56,7 @@ def get_retriever(vector_store :Chroma, k:int =4):
         search_kwargs = {"k":k}
     )
     return retriever
+
 
 
 

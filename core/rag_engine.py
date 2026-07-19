@@ -57,7 +57,7 @@ def build_rag_chain(transcript:str):
 
 def load_rag_chain():
     vector_store = load_vector_store()
-    retriver = get_retriever()
+    retriever = get_retriever()
 
     llm = get_llm()
     prompt = ChatPromptTemplate.from_messages([
@@ -78,7 +78,7 @@ def load_rag_chain():
 
     rag_chain = (
         {
-            "context":  retriver| RunnableLambda(format_docs),
+            "context":  retriever| RunnableLambda(format_docs),
             "question": RunnablePassthrough(),
         }
         | prompt
@@ -90,6 +90,6 @@ def load_rag_chain():
 
 def ask_question(rag_chain, question :str)->str:
     print(f"User question: {question}")
-    answer = rag_chain.invoke({"question": question})
+    answer = rag_chain.invoke(question)
     print(f"Answer: {answer}")
     return answer
